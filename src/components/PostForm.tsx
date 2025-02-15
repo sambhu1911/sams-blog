@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Post } from '../types';
+
+export interface Post {
+  id: number;
+  title: string;
+  content: string;
+  imageUrl: string;
+}
 
 interface PostFormProps {
   initialPost?: Post;
@@ -19,13 +25,9 @@ const PostForm: React.FC<PostFormProps> = ({ initialPost, onSave }) => {
     const file = e.target.files?.[0] || null;
     setImage(file);
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPost({ ...post, imageUrl: reader.result as string });
-      };
-      reader.readAsDataURL(file);
+      setPost(prevPost => ({ ...prevPost, imageUrl: URL.createObjectURL(file) }));
     } else {
-      setPost({ ...post, imageUrl: '' });
+      setPost(prevPost => ({ ...prevPost, imageUrl: '' }));
     }
   };
 
@@ -37,17 +39,37 @@ const PostForm: React.FC<PostFormProps> = ({ initialPost, onSave }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Title</label>
-        <input type="text" name="title" value={post.title} onChange={handleChange} required />
+        <label htmlFor="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value={post.title}
+          onChange={handleChange}
+          required
+        />
       </div>
       <div>
-        <label>Content</label>
-        <textarea name="content" value={post.content} onChange={handleChange} required />
+        <label htmlFor="content">Content</label>
+        <textarea
+          id="content"
+          name="content"
+          value={post.content}
+          onChange={handleChange}
+          required
+        />
       </div>
       <div>
-        <label>Image</label>
-        <input type="file" accept="image/*" onChange={handleImageChange} />
-        {post.imageUrl && <img src={post.imageUrl} alt="Post" style={{ maxWidth: '100px' }} />}
+        <label htmlFor="image">Image</label>
+        <input
+          type="file"
+          id="image"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+        {post.imageUrl && (
+          <img src={post.imageUrl} alt="Post" style={{ maxWidth: '100px' }} />
+        )}
       </div>
       <button type="submit">Save</button>
     </form>
