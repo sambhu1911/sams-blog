@@ -114,3 +114,8 @@ form button {
 form button:hover {
   background-color: #389e0d; /* Darker green on hover */
 }
+
+/* filepath: /sams-blog/src/styles/main.css */
+.center-title {
+  text-align: center;
+}

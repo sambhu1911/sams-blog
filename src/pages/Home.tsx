@@ -28,7 +28,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="container">
-      <h1>Welcome to Kora Kagaz</h1>
+      <h1 className="center-title">Welcome to Kora kagaz</h1>
       <PostList posts={posts} onDelete={handleDelete} />
       <Link to="/create">Create New Post</Link>
     </div>
