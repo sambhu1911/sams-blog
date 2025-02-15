@@ -1,29 +1,64 @@
 /// <reference types="jest" />
 
-interface Post {
-  id: number;
-  title: string;
-  content: string;
-  // add other properties as needed
-}
+import { Post } from '../types';
+import fs from 'fs';
+import path from 'path';
 
-export const fetchPosts = async () => {
-    const response = await fetch('https://api.example.com/posts');
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    return response.json();
+const postsFilePath = path.resolve(__dirname, '../../data/posts.json');
+
+const readPostsFromFile = (): Post[] => {
+  const data = fs.readFileSync(postsFilePath, 'utf-8');
+  return JSON.parse(data);
 };
 
-export const fetchPostById = async (id: number): Promise<Post> => {
-  const response = await fetch(`https://api.example.com/posts/${id}`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  const data: Post = await response.json();
-  return data;
+const writePostsToFile = (posts: Post[]): void => {
+  fs.writeFileSync(postsFilePath, JSON.stringify(posts, null, 2), 'utf-8');
 };
 
+export const fetchPosts = async (): Promise<Post[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(readPostsFromFile()), 500);
+  });
+};
+
+export const fetchPostById = async (id: number): Promise<Post | undefined> => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(readPostsFromFile().find(post => post.id === id)), 500);
+  });
+};
+
+export const createPost = async (post: Post): Promise<void> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const posts = readPostsFromFile();
+      posts.push(post);
+      writePostsToFile(posts);
+      resolve();
+    }, 500);
+  });
+};
+
+export const updatePost = async (updatedPost: Post): Promise<void> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      let posts = readPostsFromFile();
+      posts = posts.map(post => post.id === updatedPost.id ? updatedPost : post);
+      writePostsToFile(posts);
+      resolve();
+    }, 500);
+  });
+};
+
+export const deletePost = async (id: number): Promise<void> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      let posts = readPostsFromFile();
+      posts = posts.filter(post => post.id !== id);
+      writePostsToFile(posts);
+      resolve();
+    }, 500);
+  });
+};
 
 // Removed duplicate self-import to avoid merged declaration error
 

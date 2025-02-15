@@ -1,29 +1,32 @@
-import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Post from '../components/Post';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { fetchPosts, deletePost } from '../utils/api';
+import { Post } from '../types';
+import PostList from '../components/PostList';
 
-const Home = () => {
-    const posts = [
-        { id: 1, title: 'First Blog Post', excerpt: 'This is the excerpt of the first blog post.' },
-        { id: 2, title: 'Second Blog Post', excerpt: 'This is the excerpt of the second blog post.' },
-        { id: 3, title: 'Third Blog Post', excerpt: 'This is the excerpt of the third blog post.' },
-    ];
+const Home: React.FC = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
 
-    return (
-        <div>
-            <Header />
-            <main>
-                <h1>Welcome to My Blog</h1>
-                <div>
-                    {posts.map(post => (
-                        <Post key={post.id} title={post.title} excerpt={post.excerpt} />
-                    ))}
-                </div>
-            </main>
-            <Footer />
-        </div>
-    );
+  useEffect(() => {
+    const loadPosts = async () => {
+      const posts = await fetchPosts();
+      setPosts(posts);
+    };
+    loadPosts();
+  }, []);
+
+  const handleDelete = async (id: number) => {
+    await deletePost(id);
+    setPosts(posts.filter(post => post.id !== id));
+  };
+
+  return (
+    <div className="container">
+      <h1>All Posts</h1>
+      <PostList posts={posts} onDelete={handleDelete} />
+      <Link to="/create">Create New Post</Link>
+    </div>
+  );
 };
 
 export default Home;
