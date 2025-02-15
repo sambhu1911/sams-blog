@@ -4,12 +4,6 @@ import { fetchPosts, deletePost } from '../utils/api';
 import { Post } from '../types';
 import PostList from '../components/PostList';
 
-export interface Post {
-  id: number;
-  title: string;
-  content: string;
-}
-
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
@@ -28,7 +22,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="container">
-      <h1 className="center-title">Welcome to Kora kagaz</h1>
+      <h1 className="center-title">Welcome to Kora Kagaz</h1>
       <PostList posts={posts} onDelete={handleDelete} />
       <Link to="/create">Create New Post</Link>
     </div>
