@@ -4,6 +4,12 @@ import { fetchPosts, deletePost } from '../utils/api';
 import { Post } from '../types';
 import PostList from '../components/PostList';
 
+export interface Post {
+  id: number;
+  title: string;
+  content: string;
+}
+
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
