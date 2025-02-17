@@ -29,30 +29,43 @@ app.use((req, res, next) => {
 
 // Add connection status logging
 console.log('Attempting to connect to MongoDB...');
-console.log('MongoDB URI:', process.env.MONGO_URI);
+console.log('MongoDB URI:', process.env.MONGO_URI?.substring(0, 20) + '...');
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('✅ Connected to MongoDB');
-    
-    // Start server only after successful DB connection
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.error('❌ MongoDB connection error:', err);
-    process.exit(1); // Exit if database connection fails
+// Add connection options
+mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+})
+.then(() => {
+  console.log('✅ Connected to MongoDB');
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
-
-const PostSchema = new mongoose.Schema({
-  title: String,
-  content: String,
-  createdAt: { type: Date, default: Date.now },
+})
+.catch(err => {
+  console.error('❌ MongoDB connection error:', err);
+  process.exit(1);
 });
 
-const Post = mongoose.model("Post", PostSchema);
+// Schema and Model definitions
+const PostSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  content: {
+    type: String,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const Post = mongoose.model('Post', PostSchema);
 
 // Routes with error handling
 app.post("/api/posts", async (req, res) => {
@@ -110,8 +123,16 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+// Add a basic health check route
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to Kora Kagaz API' });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+  console.error('Error details:', err);
+  res.status(500).json({ 
+    message: "Something went wrong!",
+    details: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
 });
