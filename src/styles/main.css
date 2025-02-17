@@ -1,0 +1,121 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #e6f7ff; /* Light blue background */
+  color: #333; /* Dark gray text */
+}
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px; /* Rounded corners */
+}
+
+/* Header Styles */
+header {
+  background-color: #40a9ff; /* Medium blue header */
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 8px 8px 0 0; /* Rounded corners at the top */
+}
+
+header h1 {
+  margin: 0;
+}
+
+header nav {
+  margin-top: 1rem;
+}
+
+header nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 1rem;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+/* Post List Styles */
+.post {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.post h2 {
+  margin: 0 0 0.5rem 0;
+  color: #40a9ff; /* Medium blue title */
+}
+
+.post p {
+  margin: 0 0 1rem 0;
+}
+
+.post a {
+  margin-right: 1rem;
+  color: #40a9ff; /* Medium blue link */
+  text-decoration: none;
+}
+
+.post a:hover {
+  text-decoration: underline;
+}
+
+.post button {
+  background-color: #ff4d4f; /* Red delete button */
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px; /* Rounded corners */
+}
+
+.post button:hover {
+  background-color: #f04142; /* Darker red on hover */
+}
+
+/* Form Styles */
+form div {
+  margin-bottom: 1rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555; /* Gray label */
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  background-color: #52c41a; /* Green save button */
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px; /* Rounded corners */
+}
+
+form button:hover {
+  background-color: #389e0d; /* Darker green on hover */
+}
+
+/* filepath: /sams-blog/src/styles/main.css */
+.center-title {
+  text-align: center;
+}
