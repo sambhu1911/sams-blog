@@ -16,11 +16,13 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.4",
     "@mui/material": "^6.4.4",
+    "@mui/styles": "^6.4.4",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-rate-limit": "^6.7.0",
+    "framer-motion": "^12.4.3",
     "helmet": "^6.1.5",
     "mongoose": "^7.0.3",
     "react-router-dom": "^7.1.5"
