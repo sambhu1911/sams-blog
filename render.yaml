@@ -15,3 +15,11 @@ services:
       name: mongodb-data
       mountPath: /data
       sizeGB: 10
+  - type: web
+    name: my-blog-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: client/build
+    routes:
+      - source: /*
+        destination: /index.html
