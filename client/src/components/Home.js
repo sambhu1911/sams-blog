@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Grid, Typography, Button } from '@mui/material';
-import { MotionContainer, MotionCard, fadeInUp, staggerContainer } from './animations/MotionComponents';
+import { Link } from 'react-router-dom';
+import { Container, Grid, Card, CardContent, CardActions, Typography, Button, Box } from '@mui/material';
 import axios from 'axios';
 
 function Home() {
@@ -9,7 +9,7 @@ function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/posts');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/posts`);
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching posts:', error);
@@ -19,63 +19,30 @@ function Home() {
   }, []);
 
   return (
-    <MotionContainer maxWidth="lg" sx={{ mt: 4 }} {...staggerContainer}>
-      <Typography
-        component={motion.h1}
-        variant="h3"
-        sx={{
-          textAlign: 'center',
-          mb: 4,
-          background: 'linear-gradient(45deg, #1a237e 30%, #534bae 90%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}
-        {...fadeInUp}
-      >
-        Welcome to Kora Kagaz
-      </Typography>
-
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom color="primary">Welcome to Kora Kagaz</Typography>
       <Grid container spacing={4}>
-        {posts.map((post, index) => (
+        {posts.map((post) => (
           <Grid item xs={12} md={6} key={post._id}>
-            <MotionCard
-              variants={fadeInUp}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              sx={{
-                p: 3,
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between'
-              }}
-            >
-              <CardContent>
-                <Typography variant="h5" gutterBottom color="primary">
-                  {post.title}
-                </Typography>
-                <Typography color="textSecondary" sx={{ mb: 2 }}>
-                  {new Date(post.createdAt).toLocaleDateString()}
-                </Typography>
-                <Typography variant="body1">
-                  {post.content.substring(0, 200)}...
-                </Typography>
+            <Card elevation={3} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Typography variant="h5" gutterBottom>{post.title}</Typography>
+                <Typography color="textSecondary">{new Date(post.createdAt).toLocaleDateString()}</Typography>
+                <Typography variant="body1" sx={{ mt: 2 }}>{post.content.substring(0, 200)}...</Typography>
               </CardContent>
               <CardActions>
-                <Button 
-                  component={Link} 
-                  to={`/post/${post._id}`}
-                  variant="contained" 
-                  color="primary"
-                >
-                  Read More
-                </Button>
+                <Button size="small" component={Link} to={`/post/${post._id}`}>Read More</Button>
+                <Button size="small" component={Link} to={`/edit/${post._id}`} color="primary">Edit</Button>
+                <Button size="small" color="error" onClick={() => handleDelete(post._id)}>Delete</Button>
               </CardActions>
-            </MotionCard>
+            </Card>
           </Grid>
         ))}
       </Grid>
-    </MotionContainer>
+      <Box sx={{ mt: 4, textAlign: 'center' }}>
+        <Button variant="contained" color="primary" component={Link} to="/create" size="large">Create New Post</Button>
+      </Box>
+    </Container>
   );
 }
 

@@ -22,23 +22,29 @@ async function fetchPosts() {
   }
 }
 
-function App() {
+function AppContent() {
   const location = useLocation();
 
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Home />} />
+        <Route path="/post/:id" element={<PostDetails />} />
+        <Route path="/create" element={<CreatePost />} />
+        <Route path="/edit/:id" element={<EditPost />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/resources" element={<Resources />} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
+function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Navbar />
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Home />} />
-            <Route path="/post/:id" element={<PostDetails />} />
-            <Route path="/create" element={<CreatePost />} />
-            <Route path="/edit/:id" element={<EditPost />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/resources" element={<Resources />} />
-          </Routes>
-        </AnimatePresence>
+        <AppContent />
       </Router>
     </ThemeProvider>
   );
