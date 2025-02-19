@@ -1,9 +1,16 @@
 [build]
-  publish = "build"
-  command = "npm run build"
+  # Although you might not need a build command for functions only,
+  # you can specify one if your project requires dependency installation.
+  command = "npm install"
   functions = "netlify/functions"
+  publish = "public"  # if you have static assets; if backend-only, this can be a dummy folder
 
 [[headers]]
   for = "/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

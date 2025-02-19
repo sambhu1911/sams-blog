@@ -14,13 +14,10 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.4",
-    "@mui/material": "^6.4.4",
+    "@mui/material": "^6.4.5",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -29,7 +26,10 @@
     "framer-motion": "^12.4.4",
     "helmet": "^6.1.5",
     "mongoose": "^7.0.3",
-    "react-router-dom": "^7.1.5"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.2.0",
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
