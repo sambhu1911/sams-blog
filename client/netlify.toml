@@ -1,9 +1,7 @@
 [build]
-  # Although you might not need a build command for functions only,
-  # you can specify one if your project requires dependency installation.
   command = "npm install"
+  publish = "public"
   functions = "netlify/functions"
-  publish = "public"  # if you have static assets; if backend-only, this can be a dummy folder
 
 [[headers]]
   for = "/*"
