@@ -1,0 +1,22 @@
+{
+  "name": "my-blog-website-1",
+  "version": "1.0.0",
+  "description": "A full-stack blog application built with the MERN stack.",
+  "main": "server.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sambhu1911/sams-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sambhu1911/sams-blog/issues"
+  },
+  "homepage": "https://github.com/sambhu1911/sams-blog#readme"
+}
